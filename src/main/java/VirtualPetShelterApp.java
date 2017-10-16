@@ -49,7 +49,7 @@ public class VirtualPetShelterApp {
 				System.out.println(
 						"You have adopted " + name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase());
 				System.out.println(name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase()
-						+ "is looking forward to their forever home!");
+						+ " is looking forward to their forever home!");
 				reptileHouse.adoption(name);
 			}
 			if (selection == 5) {
