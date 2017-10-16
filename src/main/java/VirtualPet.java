@@ -10,14 +10,16 @@ public class VirtualPet {
 	private String name;
 	private String description;
 	private String type;
+	private int cleanliness;
 
-	public VirtualPet(String name, String type, String description) {
+	public VirtualPet(String name, String description, String type) {
 		this.name = name;
 		this.description = description;
 		this.type = type;
 		this.thirst = 35;
 		this.hunger = 35;
 		this.boredom = 15;
+		this.cleanliness = 40;
 	}
 
 	public VirtualPet(String name, String description, String type, int hunger, int thirst, int boredom) {
@@ -27,76 +29,101 @@ public class VirtualPet {
 		this.thirst = thirst;
 		this.hunger = hunger;
 		this.boredom = boredom;
+		this.cleanliness = 40;
 	}
 
 	public int getHunger() {
 		return hunger;
 	}
 
-	public void setHunger(int hunger) {
-		this.hunger = hunger;
-	}
-
 	public int getThirst() {
 		return thirst;
-	}
-
-	public void setThirst(int thirst) {
-		this.thirst = thirst;
 	}
 
 	public int getBoredom() {
 		return boredom;
 	}
 
-	public void setBoredom(int boredom) {
-		this.boredom = boredom;
-	}
-
 	public String getName() {
-		return name;
+		return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public int getCleanliness() {
+		return cleanliness;
+	}
+
+	public void setCleanliness() {
+		this.cleanliness = 50;
 	}
 
 	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+		return description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
 	}
 
 	public String getType() {
-		return type;
+		return type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase();
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	private int createRandomFrom1ToInt(int max) {
+		return rand.nextInt(max) + 1;
+	}
+
+	public void feed() {
+		hunger += createRandomFrom1ToInt(5);
+		thirst -= createRandomFrom1ToInt(5);
+		cleanliness -= createRandomFrom1ToInt(5);
+	}
+
+	public void water() {
+		hunger -= createRandomFrom1ToInt(5);
+		thirst += createRandomFrom1ToInt(5);
+		cleanliness -= createRandomFrom1ToInt(5);
 	}
 
 	public void tick(int selection) {
-		int amount2 = rand.nextInt(3) + 1;
 		if (selection == 1) {
-			thirst -= amount2;
-			boredom = amount2;
+			thirst -= createRandomFrom1ToInt(3);
+			boredom += createRandomFrom1ToInt(3);
 		}
 		if (selection == 2) {
-			hunger -= amount2;
-			boredom += amount2;
+			hunger -= createRandomFrom1ToInt(3);
+			boredom += createRandomFrom1ToInt(3);
 		}
 		if (selection >= 3 && selection <= 5) {
-			hunger -= amount2;
-			boredom += amount2;
-			thirst -= amount2;
+			hunger -= createRandomFrom1ToInt(3);
+			boredom += createRandomFrom1ToInt(3);
+			thirst -= createRandomFrom1ToInt(3);
+		}
+		if (hunger > 50) {
+			hunger = 50;
+		}
+		if (thirst > 50) {
+			thirst = 50;
+		}
+		if (boredom > 50) {
+			boredom = 50;
+		}
+		if (cleanliness > 50) {
+			cleanliness = 50;
+		}
+		if (hunger < 0) {
+			hunger = 0;
+		}
+		if (boredom < 0) {
+			boredom = 0;
+		}
+		if (thirst < 0) {
+			thirst = 0;
+		}
+		if (cleanliness < 0) {
+			cleanliness = 0;
 		}
 	}
 
 	public void play() {
 		boredom -= 5;
-		hunger -= 5;
-		thirst -= 5;
+		hunger -= createRandomFrom1ToInt(5);
+		thirst -= createRandomFrom1ToInt(5);
+
 	}
 }
